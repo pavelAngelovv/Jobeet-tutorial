@@ -7,9 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @Route("job")
- */
 class JobController extends AbstractController
 {
     // Add constructor
@@ -17,9 +14,7 @@ class JobController extends AbstractController
     /**
      * Lists all job entities.
      *
-     * @Route("/", name="job.list")
-     *
-     * @return Response
+     * @Route("/", name="job.list", methods="GET")
      */
     public function list() : Response
     {
@@ -30,14 +25,10 @@ class JobController extends AbstractController
         ]);
     }
 
-    /**
+ /**
      * Finds and displays a job entity.
      *
-     * @Route("/{id}", name="job.show")
-     *
-     * @param Job $job
-     *
-     * @return Response
+     * @Route("job/{id}", name="job.show", methods="GET", requirements={"id" = "\d+"})
      */
     public function show(Job $job) : Response
     {
