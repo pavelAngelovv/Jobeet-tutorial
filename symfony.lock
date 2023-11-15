@@ -54,6 +54,9 @@
             "migrations/.gitignore"
         ]
     },
+    "friendsofsymfony/user-bundle": {
+        "version": "v2.1.2"
+    },
     "knplabs/knp-paginator-bundle": {
         "version": "v4.1.1"
     },
