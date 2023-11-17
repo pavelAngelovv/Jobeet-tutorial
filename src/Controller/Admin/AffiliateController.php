@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Affiliate;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,13 +57,16 @@ class AffiliateController extends AbstractController
      *
      * @param EntityManagerInterface $em
      * @param Affiliate $affiliate
+     * @param MailerService $mailer
      *
      * @return Response
      */
-    public function activate(EntityManagerInterface $em, Affiliate $affiliate) : Response
+    public function activate(EntityManagerInterface $em, Affiliate $affiliate, MailerService $mailerService) : Response
     {
         $affiliate->setActive(true);
         $em->flush();
+
+        $mailerService->sendActivationEmail($affiliate);
 
         return $this->redirectToRoute('admin.affiliate.list');
     }
