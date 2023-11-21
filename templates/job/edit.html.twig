@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Job edit</h1>
+    <h1>{{ 'Job edit'|trans }}</h1>
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
         {{ form_widget(form) }}

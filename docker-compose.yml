@@ -39,3 +39,11 @@ services:
         ports:
             - 1025:1025
             - 8025:8025
+
+    node:
+        image: node:12.13.0
+        container_name: jobeet-node
+        working_dir: /application
+        command: tail -f /dev/null
+        volumes:
+        - .:/application

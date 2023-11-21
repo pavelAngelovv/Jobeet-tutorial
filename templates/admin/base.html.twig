@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}Jobeet - Admin{% endblock %}</title>
+    <title>{% block title %}{{ 'Jobeet - Admin'|trans }}{% endblock %}</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
@@ -15,7 +15,45 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Jobeet Admin</a>
+            <a class="navbar-brand" href="{{ path('job.list') }}">{{ 'Jobeet Admin'|trans }}</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <div>
+                            <a href="{{ path('admin.category.list') }}" class="btn btn-default navbar-btn">{{ 'Admin Panel'|trans }}</a>
+                        </div>
+                    </li>
+                {% endif %}
+
+                <li style="margin-right: 10px">
+                    <div>
+                        <a href="{{ path('affiliate.create') }}" class="btn btn-default navbar-btn">{{ 'Affiliates'|trans }}</a>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a href="{{ path('job.create') }}" class="btn btn-default navbar-btn">{{ 'Post a Job'|trans }}</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ app.request.locale|upper }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        {% for locale in locales %}
+                            <li>
+                                <a href="{{ path(app.request.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': locale})) }}">
+                                    {{ locale|upper }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                {% if app.user %}
+                    <li><a href="{{ path('fos_user_security_logout') }}">{{ 'Logout'|trans }}</a></li>
+                {% endif %}
+            </ul>
         </div>
     </div>
 </nav>
@@ -24,17 +62,18 @@
     <div class="row">
         <div class="col-md-2">
             {% set currentRouteName = app.request.get('_route') %}
-        
+
             <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
                 <li role="presentation" {% if currentRouteName starts with 'admin.category.' %}class="active"{% endif %}>
-                    <a href="{{ path('admin.category.list') }}">Categories</a>
+                    <a href="{{ path('admin.category.list') }}">{{ 'Categories'|trans }}</a>
                 </li>
-        
+
                 <li role="presentation" {% if currentRouteName starts with 'admin.job.' %}class="active"{% endif %}>
-                    <a href="{{ path('admin.job.list') }}">Jobs</a>
+                    <a href="{{ url('admin.job.list') }}">{{ 'Jobs'|trans }}</a>
                 </li>
+
                 <li role="presentation" {% if currentRouteName starts with 'admin.affiliate.' %}class="active"{% endif %}>
-                    <a href="{{ path('admin.affiliate.list') }}">Affiliates</a>
+                    <a href="{{ path('admin.affiliate.list') }}">{{ 'Affiliates'|trans }}</a>
                 </li>
             </ul>
         </div>
@@ -44,5 +83,7 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
